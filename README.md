@@ -23,3 +23,8 @@ Check that it installed properly by typing  `docker-compose version`
 ---
 In Visual Studio Code, go the 'Extensions', type in   `Docker`  and install it  
 This will give you syntax highlighting, etc. when editing docker files 
+
+# Docker information commands
+`docker version`    Basic versioning information  
+`docker info`       More detailed information, including configuration and setup  
+`docker`            Commands list, including Management Commands which contain Subcommands
