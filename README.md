@@ -67,3 +67,11 @@ To remove/delete one or more containers
 Note!  This will only work for stopped containers!  
 Containers must be stopped first, or the force flag (-f) must be used
 ```
+# What happens when we run a Docker container
+  1. Looks for the image locally in the image cache
+  2. If nothing is found, it then looks in the remote image repository (Docker Hub by default)
+  3. Downloads the latest version by default and store it in the image cache
+  4. Creates a new container based on the image (without making a copy of the image) and prepares to start
+  5. Gives it a virtual IP address on a private virtual network inside docker engine
+  6. Opens up the ports that we specify with _--publish_, else opens up no ports at all  
+  7. Starts container by using the CMD in the image Dockerfile
