@@ -75,3 +75,36 @@ Containers must be stopped first, or the force flag (-f) must be used
   5. Gives it a virtual IP address on a private virtual network inside docker engine
   6. Opens up the ports that we specify with _--publish_, else opens up no ports at all  
   7. Starts container by using the CMD in the image Dockerfile
+  
+# Container vs VM
+Containers aren't mini-VMs  
+* They are just a restricted processes inside our host  
+* Limited to what resources they can access  
+* Exits when the process stops  
+---
+
+### Mongo database example
+Run a Mongo database, calling it _mongo_, running it in the background, and using the _mongo_ image  
+```
+docker run --name mongo -d mongo
+```
+Check that it's running  
+```
+docker ps
+```
+List the processes running inside a specific container  
+```
+docker top mongo
+```
+Because these are processes runnig on our host OS, any host tool used to look at processes will see these processes  
+```
+ps aux | grep mongo
+```
+Stop the container
+```
+docker stop mongo
+```
+Start the container
+```
+docker start mongo
+```
