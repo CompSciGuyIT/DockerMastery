@@ -108,3 +108,28 @@ Start the container
 ```
 docker start mongo
 ```
+
+# Assignment: Manage Multiple Containers
+* **docs.docker.com** and `--help` are your friend
+* Run a **nginx**, a **mysql**, and a **httpd** (apache) server
+* Run them all `--detach` (`-d`), name them with `--name`
+* **nginix** should listen on 80:80, **mysql** on 3306:3306, **httpd** on 8080:80 
+* When running **mysql**, use the `--env` (`-e`) option to pass in **MYSQL_RANDOM_ROOT_PASSWORD=yes** 
+* Use `docker container logs` on **mysql** to find the random password it created on startup 
+* Clean it up with `docker container stop` and `docker container rm` (both can accept multiple names or IDs) 
+* Use `docker container ls` and `docker container ls -a` to ensure everything is correct before and after cleanup 
+
+```
+docker ps
+docker container run --publish 80:80 --name nginx -d nginx
+docker container run --publish 8080:80 --name mysql -e MYSQL_RANDOM_ROOT_PASSWORD=yes -d mysql
+docker container run --publish 3606:3606 --name apache -d httpd
+docker container logs mysql
+docker container ls
+docker container stop 273 89a d60
+docker container ls
+docker container ls -a
+docker container rm 273 89a d60
+docker ps
+docker ps -a
+```
