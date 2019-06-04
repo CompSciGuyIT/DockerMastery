@@ -122,8 +122,8 @@ docker start mongo
 ```
 docker ps
 docker container run --publish 80:80 --name nginx -d nginx
-docker container run --publish 8080:80 --name mysql -e MYSQL_RANDOM_ROOT_PASSWORD=yes -d mysql
-docker container run --publish 3606:3606 --name apache -d httpd
+docker container run --publish 3306:3306 --name mysql -e MYSQL_RANDOM_ROOT_PASSWORD=yes -d mysql
+docker container run --publish 8080:80 --name apache -d httpd
 docker container logs mysql
 docker container ls
 docker container stop 273 89a d60
