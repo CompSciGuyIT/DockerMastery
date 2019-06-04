@@ -117,7 +117,8 @@ docker start mongo
 * When running **mysql**, use the `--env` (`-e`) option to pass in **MYSQL_RANDOM_ROOT_PASSWORD=yes** 
 * Use `docker container logs` on **mysql** to find the random password it created on startup 
 * Clean it up with `docker container stop` and `docker container rm` (both can accept multiple names or IDs) 
-* Use `docker container ls` and `docker container ls -a` to ensure everything is correct before and after cleanup 
+* Use `docker container ls` and `docker container ls -a` to ensure everything is correct before and after cleanup
+* Using `curl localhost` and `curl localhost:8080` is a great way to test
 
 ```
 docker ps
@@ -132,4 +133,19 @@ docker container ls -a
 docker container rm 273 89a d60
 docker ps
 docker ps -a
+```
+
+# What's going on in Containers 
+* `docker container top` - process list in one container 
+* `docker container inspect` - details of one container config in JSON format
+* `docker container stats` - performance stats for all containers letting us know resource usage in real time
+
+```
+docker container run -d --name nginx nginx
+docker container run -d --name mysql -e MYSQL_RANDOM_ROOT_PASSWORD=true mysql
+docker container ls
+docker container top mysql
+docker container top nginx
+docker container inspect mysql
+docker container stats
 ```
