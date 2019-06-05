@@ -149,3 +149,46 @@ docker container top nginx
 docker container inspect mysql
 docker container stats
 ```
+
+# Getting a Shell inside Containers 
+* `docker container run -it` - start new container interactively 
+* `docker container exec -it` - run additional command in existing container 
+
+**-t** pseudo-tty - Simulates a real terminal, like what SSH does  
+**-i** interactive - Keeps session open to receive terminal input  
+**bash** - If run with **-it**, it will give you a terminal inside the running container  
+**ubuntu** - Ubuntu image's default CMD is **bash**, so we don't have to specify it. This will be a minimal version of Ubuntu, unlike what you'd get in an .iso file  
+**alpine** - Very small Linux distribution (about 5MB) that is also security focused 
+
+`docker: Error response from daemon: OCI runtime create failed: container_linux.go:345: starting container process caused "exec: \"bash\": executable file not found in $PATH": unknown.` - **bash** isn't within the container.  We can only run things in the container that already exist in its image when we started it, or added through the **exec** or **run** commands! 
+* `docker pull alpine` - Downloads the newest image of Alpine Linux 
+Alpine doesn't have **bash**, but it does have **sh** 
+Alpine's package manager isn't **apt**, but **apk** 
+
+```
+docker container start mysql
+docker container start nginx
+docker container run -it --name proxy nginx bash 
+root@07a24c26af07:/# exit
+docker container ls
+docker container ls -a
+docker container run -it --name ubuntu ubuntu
+root@7a2cd8924cac:/# apt update
+root@7a2cd8924cac:/# apt install -y curl
+root@7a2cd8924cac:/# curl google.com
+root@7a2cd8924cac:/# exit
+docker container start -ai ubuntu
+root@7a2cd8924cac:/# curl google.com
+root@7a2cd8924cac:/# exit
+docker container ls
+docker container exec -it mysql bash
+root@f4a44b3f4d10:/# apt update && apt install -y procps
+root@f4a44b3f4d10:/# ps aux
+root@f4a44b3f4d10:/# exit
+docker container ls
+docker pull alpine
+docker image ls
+docker container run -it alpine sh
+/ # apk --help
+/ # exit
+```
