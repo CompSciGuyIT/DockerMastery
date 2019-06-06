@@ -192,3 +192,29 @@ docker container run -it alpine sh
 / # apk --help
 / # exit
 ```
+
+# Docker Networks Concepts
+### Docker network defaults 
+* Each container connected to a private virtual network "bridge"
+* Each virtual network routes through NAT firewall on host IP 
+* All containers on a virtual network can talk to each other without `-p` 
+* Best practice is to create a new virtual network for each app: 
+  * network "my_web_app" for mysql and php/apache containers 
+  * network "my_api" for mongo and nodejs containers 
+* "Batteries included, but removable" 
+  * Defualts work well in many cases, but easy to swap out parts to customise it
+* Make new virtual networks 
+* Attach containers to more than one virtual network (or none) 
+* Skip virtual networks and use host IP (`--net=host`) 
+* Use different Docker network drivers to gain new abilities 
+* And much more.. 
+
+`docker container run -p 80:80 --name webhost -d nginx`  
+`docker container port webhost`  
+**80/tcp -> 0.0.0.0:80**  
+Shows us which ports are forwarding traffic to that container from the host
+
+* The docker container is **not** using the IP address of the host  
+
+`docker container inspect --format '{{ .NetworkSettings.IPAddress }}' webhost`  
+**172.17.0.2**  
